@@ -1,22 +1,24 @@
 var GameLoop = require('scrixel-gameloop');
 var THREE = require('three');
+var Display = require('Display');
 
 
 var camera;
 var scene;
 var renderer;
 var mesh;
+var display;
 
 (function () {
     var loopFunctions = new GameLoop.LoopFunctions();
     var looper = new GameLoop.Looper(loopFunctions);
+    display = new Display();
 
     loopFunctions.draw = draw;
     loopFunctions.update = update;
 
-    var ratio = window.innerWidth / window.innerHeight;
 
-    camera = new THREE.PerspectiveCamera(70, ratio, 1, 1000);
+    camera = new THREE.PerspectiveCamera(70, display.ratio, 1, 1000);
     camera.position.z = 400;
 
     scene = new THREE.Scene();
@@ -32,8 +34,8 @@ var mesh;
     scene.add(mesh);
 
     renderer = new THREE.WebGLRenderer();
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(display.pixelRatio);
+    renderer.setSize(display.width, display.height);
 
     document.body.appendChild(renderer.domElement);
 
@@ -43,10 +45,10 @@ var mesh;
 }());
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = display.ratio;
     camera.updateProjectionMatrix();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(display.width, height);
 }
 
 function draw() {
