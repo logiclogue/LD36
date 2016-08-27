@@ -3,6 +3,7 @@ var Camera = THREE.PerspectiveCamera;
 var Display = require('./Display');
 var Texture = require('./Texture');
 var UpdatableInterface = require('./UpdatableInterface');
+var DestroyableInterface = require('./DestroyableInterface');
 var Controls = require('./Controls');
 var extend = require('./extend');
 var sprites = require('../build/sprites.json').sprites;
@@ -29,9 +30,13 @@ function Player() {
     this._x = 0;
     this._y = 0;
     this._z = 0;
+    
+    this._geometry = geometry;
+    this._material = material;
 }
 
 extend(Player.prototype, UpdatableInterface);
+extend(Player.prototype, DestroyableInterface);
 
 extend(Player.prototype, {
     set x(val) {
@@ -80,7 +85,15 @@ extend(Player.prototype, {
 
     right: function () {
         this.x += 10;
-    }
+    },
+
+    destroy: function () {
+        this.mesh.dispose();
+        this._geometry.dispose();
+        this._material.dispose();
+
+        this.update = function () {};
+    };
 });
 
 module.exports = Player;

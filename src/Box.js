@@ -1,7 +1,8 @@
-var ThreeEntityInterface = require('./ThreeEntityInterface.js');
 var THREE = require('three');
 var Texture = require('./Texture');
 var extend = require('./extend.js');
+var DestroyableInterface = require('./DestroyableInterface');
+var ThreeEntityInterface = require('./ThreeEntityInterface.js');
 var sprites = require('../build/sprites.json').sprites;
 
 
@@ -14,12 +15,28 @@ function Box() {
     });
 
     this.mesh = new THREE.Mesh(geometry, material);
+
+    this._geometry = geometry;
+    this._material = material;
 }
 
-Box.prototype = {
+extend(Box.prototype, DestroyableInterface);
+extend(Box.prototype, ThreeEntityInterface);
 
+Box.prototype = {
+    destroy: function () {
+
+    };
 };
 
-extend(Box.prototype, ThreeEntityInterface);
+(function (proto_) {
+    
+    proto_.destroy = function () {
+        this.mesh.dispose();
+        this._geometry.dispose();
+        this._material.dispose();
+    };
+
+}(Box.prototype));
 
 module.exports = Box;
