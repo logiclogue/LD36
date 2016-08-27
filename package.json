@@ -4,7 +4,10 @@
   "description": "My entry for the 36th Ludum Dare game jam",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "make build",
+    "build:src": "make build-src",
+    "build:style": "make build-style"
   },
   "repository": {
     "type": "git",
@@ -22,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/logiclogue/LD36/issues"
   },
-  "homepage": "https://github.com/logiclogue/LD36#readme"
+  "homepage": "https://github.com/logiclogue/LD36#readme",
+  "dependencies": {
+    "browserify": "^13.1.0"
+  }
 }

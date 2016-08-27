@@ -11,7 +11,9 @@ install:
 build: build-src build-style
 
 build-src:
+	touch $(BUILD_DIR)all.js
 	browserify $(SRC_MAIN) -o $(BUILD_DIR)all.js -d
 
 build-style:
-	cat $(STYLE_DIR)* > $(BUILD_DIR)all.css
+	touch $(BUILD_DIR)all.css
+	cat $(STYLE_DIR)*.css > $(BUILD_DIR)all.css
