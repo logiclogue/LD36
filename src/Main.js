@@ -1,13 +1,14 @@
 var GameLoop = require('scrixel-gameloop');
 var THREE = require('three');
 var Display = require('./Display');
-var sprites = require('../build/sprites.json').font;
+var Box = require('./Box');
 
 
+var box = new Box();
 var camera;
 var scene;
 var renderer;
-var mesh;
+var mesh = box.mesh;
 var display;
 
 (function () {
@@ -22,18 +23,11 @@ var display;
     camera.position.z = 400;
 
     scene = new THREE.Scene();
+    var box2 = new Box();
+    box2.y = 200;
 
-    var texture = new THREE.TextureLoader().load(sprites[0][0]);
-    texture.magFilter = THREE.NearestFilter;
-    texture.minFilter = THREE.LinearMipMapLinearFilter;
-
-    var geometry = new THREE.BoxBufferGeometry(200, 200, 200);
-    var material = new THREE.MeshBasicMaterial({
-        map: texture
-    });
-
-    mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
+    scene.add(box2.mesh);
 
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(display.pixelRatio);
@@ -58,6 +52,6 @@ function draw() {
 }
 
 function update() {
-    mesh.rotation.x += 0.005;
-    mesh.rotation.y += 0.05;
+    //mesh.rotation.x += 0.005;
+    //mesh.rotation.y += 0.05;
 }

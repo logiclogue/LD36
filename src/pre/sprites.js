@@ -1,11 +1,8 @@
 var SS = require('scrixel-spritesheet');
-var loader = new SS.Loader();
 
 
 var rootdir = __dirname + '/../../';
 var exportPath = rootdir + 'build/sprites.json';
-var spriteSheetImage;
-var fontImage;
 
 
 loadSprite(rootdir + 'res/sprites/sprites.png', 'sprites', 16, 16, function () {
@@ -15,6 +12,8 @@ loadSprite(rootdir + 'res/sprites/sprites.png', 'sprites', 16, 16, function () {
 });
 
 function loadSprite(path, spriteSheetName, width, height, callback) {
+    var loader = new SS.Loader();
+
     loader.loadImage(path, function (image) {
         var spriteSheet = new SS.SpriteSheet(image);
         var splitter = new SS.Splitter(spriteSheet);
@@ -28,7 +27,3 @@ function loadSprite(path, spriteSheetName, width, height, callback) {
         });
     });
 }
-
-loadSprite.then = function () {
-
-};

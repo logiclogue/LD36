@@ -1,25 +1,25 @@
 var ThreeEntityInterface = {
-    three: null,
+    mesh: null,
 
     get x() {
-        return this.three.position.x;
+        return this.mesh.position.x;
     },
     set x(val) {
-        this.three.position.x = val;
+        this.mesh.position.x = val;
     },
 
     get y() {
-        return this.three.position.y;
+        return this.mesh.position.y;
     },
     set y(val) {
-        this.three.position.y = val;
+        this.mesh.position.y = val;
     },
 
     get z() {
-        return this.three.position.z;
+        return this.mesh.position.z;
     },
     set z(val) {
-        this.three.position.z = val
+        this.mesh.position.z = val
     }
 };
 
