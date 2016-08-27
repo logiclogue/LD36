@@ -60,11 +60,16 @@ extend(Player.prototype, {
 
 
     update: function () {
-        if (this.controls.keysDown[this.controls.keys.left]) {
+        var isLeft = this.controls.keysDown[this.controls.keys.left];
+        var isRight = this.controls.keysDown[this.controls.keys.right];
+        var isA = this.controls.keysDown[this.controls.keys.a];
+        var isD = this.controls.keysDown[this.controls.keys.d];
+
+        if (isLeft || isA) {
             this.left();
         }
 
-        if (this.controls.keysDown[this.controls.keys.right]) {
+        if (isRight || isD) {
             this.right();
         }
     },
