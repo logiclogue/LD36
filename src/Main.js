@@ -1,6 +1,7 @@
 var GameLoop = require('scrixel-gameloop');
 var THREE = require('three');
-var Display = require('Display');
+var Display = require('./Display');
+var sprites = require('../build/sprites.json').font;
 
 
 var camera;
@@ -22,7 +23,9 @@ var display;
 
     scene = new THREE.Scene();
 
-    var texture = new THREE.TextureLoader().load('res/sprites/font.png');
+    var texture = new THREE.TextureLoader().load(sprites[0][0]);
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.LinearMipMapLinearFilter;
 
     var geometry = new THREE.BoxBufferGeometry(200, 200, 200);
     var material = new THREE.MeshBasicMaterial({
