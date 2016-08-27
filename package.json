@@ -1,0 +1,26 @@
+{
+  "name": "ludum-dare-36",
+  "version": "1.0.0",
+  "description": "My entry for the 36th Ludum Dare game jam",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/logiclogue/LD36.git"
+  },
+  "keywords": [
+    "game",
+    "ludum",
+    "dare",
+    "threejs",
+    "3d"
+  ],
+  "author": "Jordan Lord",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/logiclogue/LD36/issues"
+  },
+  "homepage": "https://github.com/logiclogue/LD36#readme"
+}
