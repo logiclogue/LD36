@@ -17,7 +17,6 @@ var display;
     loopFunctions.draw = draw;
     loopFunctions.update = update;
 
-
     camera = new THREE.PerspectiveCamera(70, display.ratio, 1, 1000);
     camera.position.z = 400;
 
