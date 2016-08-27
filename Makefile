@@ -8,7 +8,7 @@ all: install build
 install:
 	npm install
 
-build: build-src build-style build-sprites
+build: build-sprites build-src build-style
 
 build-src:
 	touch $(BUILD_DIR)all.js
