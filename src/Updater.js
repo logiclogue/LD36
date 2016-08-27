@@ -27,3 +27,5 @@ extend(Updater.prototype, UpdatableInterface);
     };
 
 }(Updater.prototype));
+
+module.exports = Updater;
