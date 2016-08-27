@@ -14,7 +14,6 @@ function Box() {
     });
 
     this.mesh = new THREE.Mesh(geometry, material);
-    console.log(this.mesh);
 }
 
 Box.prototype = {

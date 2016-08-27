@@ -26,8 +26,8 @@ function Controls() {
      * Enables the event listeners.
      */
     proto_.enable = function () {
-        addEventListener('keydown', this._keydown, false);
-        addEventListener('keyup', this._keyup, false);
+        addEventListener('keydown', this._keydownFunc, false);
+        addEventListener('keyup', this._keyupFunc, false);
     };
 
     /*

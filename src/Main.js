@@ -55,6 +55,5 @@ function draw() {
 }
 
 function update() {
-    //box.mesh.rotation.x += 0.005;
-    //box.mesh.rotation.y += 0.05;
+    player.update();
 }

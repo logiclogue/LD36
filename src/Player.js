@@ -2,6 +2,9 @@ var THREE = require('three');
 var Camera = THREE.PerspectiveCamera;
 var Display = require('./Display');
 var Texture = require('./Texture');
+var UpdatableInterface = require('./UpdatableInterface');
+var Controls = require('./Controls');
+var extend = require('./extend');
 var sprites = require('../build/sprites.json').sprites;
 
 var display = new Display();
@@ -17,15 +20,20 @@ function Player() {
 
     this.mesh = new THREE.Mesh(geometry, material);
     this.camera = new Camera(70, display.ratio, 1, 1000);
+    this.controls = new Controls();
+
+    this.controls.enable();
 
     this.cameraDistance = 400;
 
-    this.x = 0;
-    this.y = 0;
-    this.z = 0;
+    this._x = 0;
+    this._y = 0;
+    this._z = 0;
 }
 
-Player.prototype = {
+extend(Player.prototype, UpdatableInterface);
+
+extend(Player.prototype, {
     set x(val) {
         this.mesh.position.x = val;
         this.camera.position.x = val;
@@ -38,7 +46,7 @@ Player.prototype = {
         this.mesh.position.y = val;
         this.camera.position.y = val;
     },
-    get x() {
+    get y() {
         return this.mesh.position.y;
     },
 
@@ -48,7 +56,26 @@ Player.prototype = {
     },
     get z() {
         return this.mesh.position.z;
+    },
+
+
+    update: function () {
+        if (this.controls.keysDown[this.controls.keys.left]) {
+            this.left();
+        }
+
+        if (this.controls.keysDown[this.controls.keys.right]) {
+            this.right();
+        }
+    },
+
+    left: function () {
+        this.x -= 10;
+    },
+
+    right: function () {
+        this.x += 10;
     }
-};
+});
 
 module.exports = Player;
