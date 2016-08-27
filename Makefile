@@ -3,12 +3,12 @@ SRC_DIR=src/
 STYLE_DIR=style/
 SRC_MAIN=$(SRC_DIR)Main.js
 
-all: install build-src build-style
+all: install build
 
 install:
 	npm install
 
-build: build-src build-style
+build: build-src build-style build-sprites
 
 build-src:
 	touch $(BUILD_DIR)all.js
@@ -17,3 +17,7 @@ build-src:
 build-style:
 	touch $(BUILD_DIR)all.css
 	cat $(STYLE_DIR)*.css > $(BUILD_DIR)all.css
+
+build-sprites:
+	touch $(BUILD_DIR)sprites.json
+	node src/pre/sprites.js

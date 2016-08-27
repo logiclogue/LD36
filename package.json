@@ -8,6 +8,7 @@
     "build": "make build",
     "build:src": "make build-src",
     "build:style": "make build-style"
+    "build:sprites": "make build-sprites"
   },
   "repository": {
     "type": "git",
