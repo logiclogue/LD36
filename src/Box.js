@@ -3,35 +3,34 @@ var Texture = require('./Texture');
 var extend = require('./extend.js');
 var DestroyableInterface = require('./DestroyableInterface');
 var ThreeEntityInterface = require('./ThreeEntityInterface.js');
+var Collision = require('scrixel-collision');
 var sprites = require('../build/sprites.json').sprites;
 
 
 var texture = new Texture(sprites[0][0]);
 
 function Box() {
-    var geometry = new THREE.BoxBufferGeometry(200, 200, 200);
-    var material = new THREE.MeshBasicMaterial({
+    var width = 200;
+    var height = 200;
+    var depth = 200;
+
+    this._geometry = new THREE.BoxBufferGeometry(width, height, depth);
+    this._material = new THREE.MeshBasicMaterial({
         map: texture
     });
 
-    this.mesh = new THREE.Mesh(geometry, material);
+    this.mesh = new THREE.Mesh(this._geometry, this._material);
+    this.collisionBox = new Collision.Box(width, height);
+
+    this.collisionBox.parent = this;
 
     this.x = 0;
     this.y = 0;
     this.z = 0;
-
-    this._geometry = geometry;
-    this._material = material;
 }
 
 extend(Box.prototype, DestroyableInterface);
 extend(Box.prototype, ThreeEntityInterface);
-
-extend(Box.prototype, {
-    destroy: function () {
-        
-    }
-});
 
 (function (proto_) {
     

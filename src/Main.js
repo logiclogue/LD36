@@ -45,5 +45,5 @@ function draw() {
 }
 
 function update() {
-    level.player.update();
+    level.update();
 }

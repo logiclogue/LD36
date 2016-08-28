@@ -9,9 +9,9 @@ var Collision = require('scrixel-collision');
 var extend = require('./extend');
 var sprites = require('../build/sprites.json').sprites;
 
+
 var display = new Display();
 var texture = new Texture(sprites[0][1]);
-
 
 function Player() {
     var width = 200;
@@ -29,6 +29,8 @@ function Player() {
     this.collisionBox = new Collision.Box(width, height);
     this.collisionGroup = new Collision.Group();
 
+    this.collisionBox.parent = this;
+
     this.collisionGroup.addBox(this.collisionBox);
     this.controls.enable();
 
@@ -37,8 +39,8 @@ function Player() {
     this.x = 0;
     this.y = 0;
     this.z = 0;
-    this.width = width;
-    this.height = height;
+    this.prevX = 0;
+    this.prevY = 0;
 }
 
 extend(Player.prototype, UpdatableInterface);
@@ -46,16 +48,20 @@ extend(Player.prototype, DestroyableInterface);
 
 extend(Player.prototype, {
     set x(val) {
+        this.prevX = this.mesh.position.x;
         this.mesh.position.x = val;
         this.camera.position.x = val;
+        this.collisionBox.x = val;
     },
     get x() {
         return this.mesh.position.x;
     },
 
     set y(val) {
+        this.prevY = this.mesh.position.y;
         this.mesh.position.y = val;
         this.camera.position.y = val;
+        this.collisionBox.y = val;
     },
     get y() {
         return this.mesh.position.y;
