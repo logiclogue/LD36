@@ -29,9 +29,9 @@
   "homepage": "https://github.com/logiclogue/LD36#readme",
   "dependencies": {
     "browserify": "^13.1.0",
-    "scrixel-collision": "^1.0.1",
+    "scrixel-collision": "^1.0.2",
     "scrixel-gameloop": "^1.0.0",
-    "scrixel-spritesheet": "^0.1.0",
+    "scrixel-spritesheet": "^0.1.2",
     "three": "^0.80.1",
     "uglify-js": "^2.7.3"
   }
