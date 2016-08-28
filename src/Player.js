@@ -27,10 +27,6 @@ function Player() {
 
     this.cameraDistance = 400;
 
-    this._x = 0;
-    this._y = 0;
-    this._z = 0;
-    
     this._geometry = geometry;
     this._material = material;
 }
@@ -93,7 +89,7 @@ extend(Player.prototype, {
         this._material.dispose();
 
         this.update = function () {};
-    };
+    }
 });
 
 module.exports = Player;
