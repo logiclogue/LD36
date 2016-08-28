@@ -5,6 +5,7 @@ var Texture = require('./Texture');
 var UpdatableInterface = require('./UpdatableInterface');
 var DestroyableInterface = require('./DestroyableInterface');
 var Controls = require('./Controls');
+var Collision = require('scrixel-collision');
 var extend = require('./extend');
 var sprites = require('../build/sprites.json').sprites;
 
@@ -13,16 +14,22 @@ var texture = new Texture(sprites[0][1]);
 
 
 function Player() {
-    var geometry = new THREE.PlaneGeometry(200, 200);
-    var material = new THREE.MeshBasicMaterial({
+    var width = 200;
+    var height = 200;
+
+    this._geometry = new THREE.PlaneGeometry(width, height);
+    this._material = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true
     });
 
-    this.mesh = new THREE.Mesh(geometry, material);
+    this.mesh = new THREE.Mesh(this._geometry, this._material);
     this.camera = new Camera(70, display.ratio, 1, 1000);
     this.controls = new Controls();
+    this.collisionBox = new Collision.Box(width, height);
+    this.collisionGroup = new Collision.Group();
 
+    this.collisionGroup.addBox(this.collisionBox);
     this.controls.enable();
 
     this.cameraDistance = 400;
@@ -30,9 +37,8 @@ function Player() {
     this.x = 0;
     this.y = 0;
     this.z = 0;
-
-    this._geometry = geometry;
-    this._material = material;
+    this.width = width;
+    this.height = height;
 }
 
 extend(Player.prototype, UpdatableInterface);

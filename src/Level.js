@@ -10,17 +10,16 @@ function Level() {
     this.player = new Player();
     this.box1 = new Box();
     this.box2 = new Box();
+    this.box3 = new Box();
 
     this.box1.z = -200;
     this.box2.y = 200;
-
-    console.log(this.player);
-    console.log(this.box1);
-    console.log(this.box2);
+    this.box3.x = 600;
 
     this.scene.add(this.player.mesh);
     this.scene.add(this.box1.mesh);
     this.scene.add(this.box2.mesh);
+    this.scene.add(this.box3.mesh);
 }
 
 extend(Level.prototype, DestroyableInterface);
