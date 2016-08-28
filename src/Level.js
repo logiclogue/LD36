@@ -24,6 +24,7 @@ function Level() {
 
     this.collisionManager.onWest = this._onXCollision;
     this.collisionManager.onEast = this._onXCollision;
+
     this.boxCollisionGroup.addBox(this.box1.collisionBox);
     this.boxCollisionGroup.addBox(this.box2.collisionBox);
     this.boxCollisionGroup.addBox(this.box3.collisionBox);

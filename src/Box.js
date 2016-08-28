@@ -3,6 +3,7 @@ var Texture = require('./Texture');
 var extend = require('./extend.js');
 var DestroyableInterface = require('./DestroyableInterface');
 var ThreeEntityInterface = require('./ThreeEntityInterface.js');
+var Entity = require('./Entity');
 var Collision = require('scrixel-collision');
 var sprites = require('../build/sprites.json').sprites;
 
@@ -31,6 +32,7 @@ function Box() {
 
 extend(Box.prototype, DestroyableInterface);
 extend(Box.prototype, ThreeEntityInterface);
+extend(Box.prototype, Entity.prototype);
 
 (function (proto_) {
     
