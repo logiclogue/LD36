@@ -16,6 +16,10 @@ function Box() {
 
     this.mesh = new THREE.Mesh(geometry, material);
 
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+
     this._geometry = geometry;
     this._material = material;
 }
@@ -23,11 +27,11 @@ function Box() {
 extend(Box.prototype, DestroyableInterface);
 extend(Box.prototype, ThreeEntityInterface);
 
-Box.prototype = {
+extend(Box.prototype, {
     destroy: function () {
-
-    };
-};
+        
+    }
+});
 
 (function (proto_) {
     

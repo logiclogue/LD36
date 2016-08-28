@@ -27,6 +27,10 @@ function Player() {
 
     this.cameraDistance = 400;
 
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+
     this._geometry = geometry;
     this._material = material;
 }

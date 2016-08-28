@@ -3,6 +3,7 @@ var THREE = require('three');
 var Display = require('./Display');
 var Box = require('./Box');
 var Player = require('./Player');
+var Level = require('./Level');
 
 
 var box;
@@ -10,27 +11,16 @@ var scene;
 var renderer;
 var display;
 var player;
+var level;
 
 (function () {
     var loopFunctions = new GameLoop.LoopFunctions();
     var looper = new GameLoop.Looper(loopFunctions);
     display = new Display();
+    level = new Level();
 
     loopFunctions.draw = draw;
     loopFunctions.update = update;
-
-    scene = new THREE.Scene();
-    player = new Player();
-    box = new Box();
-    var box2 = new Box();
-
-    box.z -= 200;
-    box2.y = 200;
-    player.z = 0;
-
-    scene.add(box.mesh);
-    scene.add(box2.mesh);
-    scene.add(player.mesh);
 
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(display.pixelRatio);
@@ -44,16 +34,16 @@ var player;
 }());
 
 function onWindowResize() {
-    player.camera.aspect = display.ratio;
-    player.camera.updateProjectionMatrix();
+    level.player.camera.aspect = display.ratio;
+    level.player.camera.updateProjectionMatrix();
 
-    renderer.setSize(display.width, height);
+    renderer.setSize(display.width, display.height);
 }
 
 function draw() {
-    renderer.render(scene, player.camera);
+    renderer.render(level.scene, level.player.camera);
 }
 
 function update() {
-    player.update();
+    level.player.update();
 }
