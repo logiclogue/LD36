@@ -25,6 +25,8 @@ function Player() {
     var width = 100;
     var height = 100;
 
+    this.isPlayer = true;
+
     this._geometry = new THREE.PlaneGeometry(width, height);
     this._material = new THREE.MeshBasicMaterial({
         map: leftTextures[0],

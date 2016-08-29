@@ -7,34 +7,43 @@ var maps = require('../res/maps.json');
 
 function Map(mapName) {
     this.mapLoader = new MapLoader(maps[mapName]);
+    this.player;
     this.meshes = [];
+
+    this._callback;
 }
 
-(function (static_, proto_) {
-
-    static_.symbols = {
-        '0': Player,
-        '#': Box
-    };
-
+(function (proto_) {
 
     proto_.load = function (callback) {
-        this.mapLoader.forEach(function (character, x, y) {
-            var TheClass = static_.symbols[character];
-            var theClass;
+        this._callback = callback;
 
-            if (typeof TheClass === 'undefined') {
-                TheClass = Wall;
+        this.mapLoader.forEach(function (character, y, x) {
+            switch (character) {
+                case '0':
+                    this.player = new Player();
+                    this._addEntity(this.player, x, y, character);
+                    this._addEntity(new Wall(), x, y, character);
+                    break;
+                case '#':
+                    this._addEntity(new Box(), x, y, character);
+                    break;
+                default:
+                    this._addEntity(new Wall(), x, y, character);
+                    break;
             }
-
-            theClass = new TheClass();
-            theClass.x = x * 200;
-            theClass.y = y * 200;
-
-            callback(theClass, x, y, character);
         }.bind(this));
+
+        console.log(this.player);
     };
 
-}(Map, Map.prototype));
+    proto_._addEntity = function (entity, x, y, character) {
+        entity.x = x * 200;
+        entity.y = y * 200;
+
+        this._callback(entity, x, y, character);
+    };
+
+}(Map.prototype));
 
 module.exports = Map;

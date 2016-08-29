@@ -4,6 +4,9 @@ var extend = require('./extend');
 
 function CollisionManager() {
     Collision.CollisionManager.apply(this, arguments);
+
+    console.log(this.groupA);
+    console.log(this.groupB);
 }
 
 extend(CollisionManager.prototype, Collision.CollisionManager.prototype);
@@ -11,11 +14,12 @@ extend(CollisionManager.prototype, Collision.CollisionManager.prototype);
 (function (proto_) {
 
     proto_.onCollision = function (methodName, boxA, boxB) {
-        this._getMethod(methodName, boxA)(boxA, boxB);
-        this._getMethod(methodName, boxB)(boxA, boxB);
+        this._getMethod(methodName, boxA)(boxB);
+        this._getMethod(methodName, boxB)(boxB);
     };
 
     proto_.onTouch = function (boxA, boxB) {
+        console.log('here');
         this.onCollision('onTouch', boxA, boxB);
     };
 

@@ -11,14 +11,7 @@ var extend = require('./extend');
 
 
 function Level() {
-    var Manager = Collision.CollisionManager;
-
     this.scene = new THREE.Scene();
-    this.player = new Player();
-    this.box1 = new Box();
-    this.box2 = new Box();
-    this.box3 = new Box();
-    this.boxCollisionGroup = new Collision.Group();
     this.entityManager = new EntityManager();
     this.map = new Map('level1', this.scene);
     this.groupA = new Collision.Group();
@@ -27,10 +20,9 @@ function Level() {
 
     this.map.load(this._sortEntities.bind(this));
 
+    this.player = this.map.player;
+
     this.scene.add(this.player.mesh);
-    this.scene.add(this.box1.mesh);
-    this.scene.add(this.box2.mesh);
-    this.scene.add(this.box3.mesh);
 }
 
 extend(Level.prototype, UpdatableInterface);
@@ -45,8 +37,10 @@ extend(Level.prototype, DestroyableInterface);
 
     proto_.destroy = function () {
         this.player.destroy();
-        this.box1.destroy();
-        this.box2.destroy();
+
+        this.entityManager.forEach(function (entity) {
+            entity.destroy();
+        });
     };
 
     proto_.addMesh = function (entity) {

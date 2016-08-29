@@ -42,6 +42,24 @@ extend(Box.prototype, Entity.prototype);
         this._material.dispose();
     };
 
+
+    proto_.onWest = function (box) {
+        console.log('here');
+        if (!box.isPlayer) {
+            return;
+        }
+
+        box.parent.x = box.prevX;
+    };
+
+    proto_.onEast = function (box) {
+        if (!box.isPlayer) {
+            return;
+        }
+
+        box.parent.x = box.prevX;
+    }
+
 }(Box.prototype));
 
 module.exports = Box;
