@@ -5,21 +5,29 @@ var Texture = require('./Texture');
 var UpdatableInterface = require('./UpdatableInterface');
 var DestroyableInterface = require('./DestroyableInterface');
 var Controls = require('./Controls');
+var Animation = require('./Animation');
 var Collision = require('scrixel-collision');
 var extend = require('./extend');
 var sprites = require('../build/sprites.json').sprites;
 
 
 var display = new Display();
-var texture = new Texture(sprites[0][1]);
+var leftTextures = [
+    new Texture(sprites[0][1]),
+    new Texture(sprites[1][1])
+];
+var rightTextures = [
+    new Texture(sprites[2][1]),
+    new Texture(sprites[3][1])
+];
 
 function Player() {
-    var width = 200;
-    var height = 200;
+    var width = 100;
+    var height = 100;
 
     this._geometry = new THREE.PlaneGeometry(width, height);
     this._material = new THREE.MeshBasicMaterial({
-        map: texture,
+        map: leftTextures[0],
         transparent: true
     });
 
@@ -28,6 +36,8 @@ function Player() {
     this.controls = new Controls();
     this.collisionBox = new Collision.Box(width, height);
     this.collisionGroup = new Collision.Group();
+    this.animationLeft = new Animation(100, leftTextures);
+    this.animationRight = new Animation(100, rightTextures);
 
     this.collisionBox.parent = this;
 
@@ -41,6 +51,9 @@ function Player() {
     this.z = 0;
     this.prevX = 0;
     this.prevY = 0;
+
+    this.time = Date.now();
+    this.textureNum = 0;
 }
 
 extend(Player.prototype, UpdatableInterface);
@@ -49,22 +62,22 @@ extend(Player.prototype, DestroyableInterface);
 extend(Player.prototype, {
     set x(val) {
         this.prevX = this.mesh.position.x;
-        this.mesh.position.x = val;
+        this.mesh.position.x = val - 50;
         this.camera.position.x = val;
         this.collisionBox.x = val;
     },
     get x() {
-        return this.mesh.position.x;
+        return this.mesh.position.x + 50;
     },
 
     set y(val) {
         this.prevY = this.mesh.position.y;
-        this.mesh.position.y = val;
+        this.mesh.position.y = val - 50;
         this.camera.position.y = val;
         this.collisionBox.y = val;
     },
     get y() {
-        return this.mesh.position.y;
+        return this.mesh.position.y + 50;
     },
 
     set z(val) {
@@ -93,10 +106,12 @@ extend(Player.prototype, {
 
     left: function () {
         this.x -= 10;
+        this.mesh.material.map = this.animationLeft.get();
     },
 
     right: function () {
         this.x += 10;
+        this.mesh.material.map = this.animationRight.get();
     },
 
     destroy: function () {
