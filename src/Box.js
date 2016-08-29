@@ -24,6 +24,7 @@ function Box() {
     this.collisionBox = new Collision.Box(width, height);
 
     this.collisionBox.parent = this;
+    this.surround = 0;
 
     this.x = 0;
     this.y = 0;
@@ -44,7 +45,7 @@ extend(Box.prototype, Entity.prototype);
 
 
     proto_.onWest = function (box) {
-        if (!box.parent.isPlayer) {
+        if (!box.parent.isPlayer || this.surround & 8 === 8) {
             return;
         }
 
@@ -52,7 +53,7 @@ extend(Box.prototype, Entity.prototype);
     };
 
     proto_.onEast = function (box) {
-        if (!box.isPlayer) {
+        if (!box.parent.isPlayer || this.surround & 2 === 2) {
             return;
         }
 

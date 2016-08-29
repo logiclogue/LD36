@@ -18,10 +18,12 @@ function MapLoader(map) {
     proto_.forEach = function (callback) {
         var length = this.map.length;
 
-        this.map.forEach(function (row, x) {
-            this._stringForEach(row, function (character, y) {
-                callback(character, length - x - 1, y);
-            });
+        this.map.forEach(function (row, y) {
+            this._stringForEach(row, function (character, x) {
+                var surround = this.allAround(x, y, character);
+
+                callback(character, x, length - y - 1, surround);
+            }.bind(this));
         }.bind(this));
     };
 
@@ -36,6 +38,45 @@ function MapLoader(map) {
 
             callback(character, i);
         }
+    };
+
+    proto_.allAround = function (x, y, character) {
+        var number = 0;
+
+        if (this.getPos(x + 1, y, character)) {
+            number = number | 1;
+        }
+
+        if (this.getPos(x, y + 1, character)) {
+            number = number | 2;
+        }
+
+        if (this.getPos(x - 1, y, character)) {
+            number = number | 4;
+        }
+
+        if (this.getPos(x, y - 1, character)) {
+            number = number | 8;
+        }
+
+        return number;
+    }
+
+    proto_.getPos = function (x, y, targetChar) {
+        var column = this.map[x];
+        var character;
+
+        if (typeof column === 'undefined') {
+            return false;
+        }
+
+        character = column[y];
+
+        if (typeof character === 'undefined') {
+            return false;
+        }
+
+        return targetChar === character;
     };
 
 }(MapLoader.prototype));

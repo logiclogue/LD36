@@ -15,8 +15,8 @@ extend(CollisionManager.prototype, Collision.CollisionManager.prototype);
             return;
         }
 
-        this._getMethod(methodName, boxA)(boxB);
-        this._getMethod(methodName, boxB)(boxB);
+        this._getMethod(methodName, boxA).call(boxA.parent, boxB);
+        this._getMethod(methodName, boxB).call(boxB.parent, boxB);
     };
 
     proto_.onTouch = function (boxA, boxB) {

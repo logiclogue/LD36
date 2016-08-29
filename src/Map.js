@@ -18,15 +18,20 @@ function Map(mapName) {
     proto_.load = function (callback) {
         this._callback = callback;
 
-        this.mapLoader.forEach(function (character, y, x) {
+        this.mapLoader.forEach(function (character, x, y, surround) {
             switch (character) {
                 case '0':
                     this.player = new Player();
+
                     this._addEntity(this.player, x, y, character);
                     this._addEntity(new Wall(), x, y, character);
                     break;
                 case '#':
-                    this._addEntity(new Box(), x, y, character);
+                    var box = new Box();
+
+                    box.surround = surround;
+
+                    this._addEntity(box, x, y, character);
                     break;
                 default:
                     this._addEntity(new Wall(), x, y, character);
