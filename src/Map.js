@@ -21,13 +21,18 @@ function Map(mapName, scene) {
     proto_.load = function () {
         this.mapLoader.forEach(function (character, x, y) {
             var TheClass = static_.symbols[character];
+            var theClass;
 
             if (typeof TheClass === 'undefined') {
                 return;
             }
 
-            this.scene.add(new TheClass());
-        });
+            theClass = new TheClass();
+            theClass.x = x * 200;
+            theClass.y = y * 200;
+
+            this.scene.add(theClass.mesh);
+        }.bind(this));
     };
 
 }(Map, Map.prototype));

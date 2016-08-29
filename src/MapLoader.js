@@ -7,7 +7,7 @@ function MapLoader(map) {
     /*
      * Loads the map.
      */
-    this.load = function (map) {
+    proto_.load = function (map) {
         this.map = map;
     };
 
@@ -15,18 +15,18 @@ function MapLoader(map) {
      * For each character in the map, calling back with character, x, and y
      * coordinates.
      */
-    this.forEach = function (callback) {
+    proto_.forEach = function (callback) {
         this.map.forEach(function (row, x) {
             this._stringForEach(row, function (character, y) {
                 callback(character, x, y);
             });
-        });
+        }.bind(this));
     };
 
 
-    this._stringForEach(function (string, callback) {
+    proto_._stringForEach = function (string, callback) {
         var i;
-        var length = string;
+        var length = string.length;
         var character;
 
         for (i = 0; i < length; i += 1) {
@@ -34,7 +34,7 @@ function MapLoader(map) {
 
             callback(character, i);
         }
-    });
+    };
 
 }(MapLoader.prototype));
 
