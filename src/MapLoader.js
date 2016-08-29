@@ -16,9 +16,11 @@ function MapLoader(map) {
      * and y coordinates.
      */
     proto_.forEach = function (callback) {
+        var length = this.map.length;
+
         this.map.forEach(function (row, x) {
             this._stringForEach(row, function (character, y) {
-                callback(character, x, y);
+                callback(character, length - x - 1, y);
             });
         }.bind(this));
     };
