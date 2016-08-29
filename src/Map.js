@@ -1,6 +1,7 @@
 var MapLoader = require('./MapLoader');
 var Player = require('./Player');
 var Box = require('./Box');
+var Wall = require('./Wall')
 var maps = require('../res/maps.json');
 
 
@@ -24,7 +25,7 @@ function Map(mapName, scene) {
             var theClass;
 
             if (typeof TheClass === 'undefined') {
-                return;
+                TheClass = Wall;
             }
 
             theClass = new TheClass();
