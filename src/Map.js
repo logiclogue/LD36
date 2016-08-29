@@ -33,8 +33,6 @@ function Map(mapName) {
                     break;
             }
         }.bind(this));
-
-        console.log(this.player);
     };
 
     proto_._addEntity = function (entity, x, y, character) {

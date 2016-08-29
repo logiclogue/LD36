@@ -4,22 +4,22 @@ var extend = require('./extend');
 
 function CollisionManager() {
     Collision.CollisionManager.apply(this, arguments);
-
-    console.log(this.groupA);
-    console.log(this.groupB);
 }
 
 extend(CollisionManager.prototype, Collision.CollisionManager.prototype);
 
-(function (proto_) {
+(function (proto_, super_) {
 
     proto_.onCollision = function (methodName, boxA, boxB) {
+        if (boxA === boxB) {
+            return;
+        }
+
         this._getMethod(methodName, boxA)(boxB);
         this._getMethod(methodName, boxB)(boxB);
     };
 
     proto_.onTouch = function (boxA, boxB) {
-        console.log('here');
         this.onCollision('onTouch', boxA, boxB);
     };
 
@@ -61,6 +61,6 @@ extend(CollisionManager.prototype, Collision.CollisionManager.prototype);
 
     };
 
-}(CollisionManager.prototype));
+}(CollisionManager.prototype, Collision.CollisionManager.prototype));
 
 module.exports = CollisionManager;

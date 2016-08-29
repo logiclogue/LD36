@@ -44,8 +44,7 @@ extend(Box.prototype, Entity.prototype);
 
 
     proto_.onWest = function (box) {
-        console.log('here');
-        if (!box.isPlayer) {
+        if (!box.parent.isPlayer) {
             return;
         }
 
