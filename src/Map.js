@@ -5,9 +5,8 @@ var Wall = require('./Wall')
 var maps = require('../res/maps.json');
 
 
-function Map(mapName, scene) {
+function Map(mapName) {
     this.mapLoader = new MapLoader(maps[mapName]);
-    this.scene = scene;
     this.meshes = [];
 }
 
@@ -19,7 +18,7 @@ function Map(mapName, scene) {
     };
 
 
-    proto_.load = function () {
+    proto_.load = function (callback) {
         this.mapLoader.forEach(function (character, x, y) {
             var TheClass = static_.symbols[character];
             var theClass;
@@ -32,7 +31,7 @@ function Map(mapName, scene) {
             theClass.x = x * 200;
             theClass.y = y * 200;
 
-            this.scene.add(theClass.mesh);
+            callback(theClass, x, y, character);
         }.bind(this));
     };
 

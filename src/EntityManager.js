@@ -19,3 +19,5 @@ EntityManager.prototype = {
         });
     }
 };
+
+module.exports = EntityManager;

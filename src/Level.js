@@ -6,6 +6,7 @@ var Collision = require('scrixel-collision');
 var UpdatableInterface = require('./UpdatableInterface');
 var Map = require('./Map');
 var EntityManager = require('./EntityManager');
+var Manager = require('./CollisionManager');
 var extend = require('./extend');
 
 
@@ -20,25 +21,11 @@ function Level() {
     this.boxCollisionGroup = new Collision.Group();
     this.entityManager = new EntityManager();
     this.map = new Map('level1', this.scene);
+    this.groupA = new Collision.Group();
+    this.groupB = new Collision.Group();
+    this.collisionManager = new Manager(this.groupA, this.groupB);
 
-    this.map.load();
-
-    var groupA = this.boxCollisionGroup;
-    var groupB = this.player.collisionGroup;
-
-    this.collisionManager = new Manager(groupA, groupB);
-
-    this.collisionManager.onWest = this._onXCollision;
-    this.collisionManager.onEast = this._onXCollision;
-
-    this.boxCollisionGroup.addBox(this.box1.collisionBox);
-    this.boxCollisionGroup.addBox(this.box2.collisionBox);
-    this.boxCollisionGroup.addBox(this.box3.collisionBox);
-
-    this.box1.x = -200;
-    this.box2.y = 200;
-    this.box3.x = 600;
-    this.box3.x = 1000;
+    this.map.load(this._sortEntities.bind(this));
 
     this.scene.add(this.player.mesh);
     this.scene.add(this.box1.mesh);
@@ -62,9 +49,25 @@ extend(Level.prototype, DestroyableInterface);
         this.box2.destroy();
     };
 
+    proto_.addMesh = function (entity) {
+        this.scene.add(entity.mesh);
+    };
 
-    proto_._onXCollision = function (boxA, boxB) {
-        boxB.parent.x = boxB.prevX;
+    proto_.addEntity = function (entity) {
+        if (typeof entity.mesh !== 'undefined') {
+            this.addMesh(entity);
+        }
+
+        if (typeof entity.collisionBox !== 'undefined') {
+            this.groupA.addBox(entity.collisionBox);
+            this.groupB.addBox(entity.collisionBox);
+        }
+    };
+
+
+    proto_._sortEntities = function (entity, x, y, character) {
+        this.entityManager.add(entity);
+        this.addEntity(entity);
     };
 
 }(Level.prototype));
