@@ -5,6 +5,7 @@ var Player = require('./Player');
 var Collision = require('scrixel-collision');
 var UpdatableInterface = require('./UpdatableInterface');
 var Map = require('./Map');
+var EntityManager = require('./EntityManager');
 var extend = require('./extend');
 
 
@@ -17,6 +18,7 @@ function Level() {
     this.box2 = new Box();
     this.box3 = new Box();
     this.boxCollisionGroup = new Collision.Group();
+    this.entityManager = new EntityManager();
     this.map = new Map('level1', this.scene);
 
     this.map.load();

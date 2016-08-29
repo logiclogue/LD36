@@ -12,8 +12,8 @@ function MapLoader(map) {
     };
 
     /*
-     * For each character in the map, calling back with character, x, and y
-     * coordinates.
+     * For each character in the map, calling back with character, x,
+     * and y coordinates.
      */
     proto_.forEach = function (callback) {
         this.map.forEach(function (row, x) {
